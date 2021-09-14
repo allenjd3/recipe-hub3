@@ -24,8 +24,14 @@ class RecipeFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'instructions' => 'not null',
-            'ingredients' => 'not null',
+            'instructions' => collect([
+                ['title' => 'First', 'content' => 'This is my first Content.'],
+                ['title' => 'Second', 'content' => 'This is my second Content.'],
+            ]),
+            'ingredients' => collect([
+                ['amount' => '3', 'type' => 'cups', 'name' => 'potatoes'],
+                ['amount' => '2', 'type' => 'slices', 'name' => 'peach']
+            ]),
             'user_id' => User::factory()->create()
         ];
     }
