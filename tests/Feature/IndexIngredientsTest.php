@@ -26,5 +26,6 @@ it('can show all ingredients on the page', function () {
                 ['amount' => '2', 'type' => 'slices', 'name' => 'peach']
     ]);
     Livewire::test(IndexIngredients::class, ['ingredients' => $ingredients])
-            ->assertSee('potatoes');
+            ->assertSee('potatoes')
+            ->assertSee('peach');
 });

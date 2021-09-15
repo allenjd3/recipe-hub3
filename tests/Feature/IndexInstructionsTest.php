@@ -2,8 +2,11 @@
 
 use App\Models\User;
 use App\Models\Recipe;
+use Livewire\Livewire;
 use App\Http\Livewire\IndexInstructions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use function Pest\Laravel\withoutExceptionHandling;
 
 uses(RefreshDatabase::class);
 
@@ -15,4 +18,15 @@ it('has indexinstructions page', function () {
     $response->assertStatus(200);
 
     $response->assertSeeLivewire(IndexInstructions::class);
+});
+
+it('can show all instructions on the page', function () {
+    withoutExceptionHandling();
+    $instructions = collect([
+                ['title' => 'First title', 'content' => 'Some Content'],
+                ['title' => 'Second title', 'content' => 'Some other content'],
+        ]);
+    Livewire::test(IndexInstructions::class, ['instructions' => $instructions])
+            ->assertSee('First title')
+            ->assertSee('Some other content');
 });
