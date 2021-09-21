@@ -17,7 +17,7 @@
                   </div>
                   <livewire:recipe-hero :title="$recipe->title"/>
                   <section class="pl-8 pt-8 pr-8 flex justify-between">
-                    <livewire:index-ingredients :ingredients="$recipe->ingredients"/>
+                    <livewire:index-ingredients :ingredients="$recipe->ingredients" :recipeId="$recipe->id"/>
                     <livewire:modify-portions />
                   </section>
                   <livewire:index-instructions :instructions="$recipe->instructions" />

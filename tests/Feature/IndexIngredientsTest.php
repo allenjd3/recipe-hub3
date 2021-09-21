@@ -29,3 +29,22 @@ it('can show all ingredients on the page', function () {
             ->assertSee('potatoes')
             ->assertSee('peach');
 });
+
+it('can create an ingredient', function () {
+    $user = User::factory()->create();
+    $addition = ['amount' => '4', 'type' => 'pans', 'name' => 'plums'];
+
+    $ingredients = collect([
+                ['amount' => '3', 'type' => 'cups', 'name' => 'potatoes'],
+                ['amount' => '2', 'type' => 'slices', 'name' => 'peach']
+    ]);
+    $recipe = Recipe::factory()->create([
+        'user_id'=>$user->id,
+        'ingredients'=>$ingredients
+    ]);
+    Livewire::test(IndexIngredients::class, array_merge(['recipeId' => $recipe->id, 'ingredients' => $ingredients], $addition))
+            ->call('createIngredient');
+    $ingredients->add($addition);
+    $this->assertEquals($ingredients, $recipe->fresh()->ingredients);
+            
+});
