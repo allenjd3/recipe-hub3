@@ -46,5 +46,20 @@ it('can create an ingredient', function () {
             ->call('createIngredient');
     $ingredients->add($addition);
     $this->assertEquals($ingredients, $recipe->fresh()->ingredients);
-            
+});
+
+it('can set an ingredient from json', function () {
+    $recipe = Recipe::factory()->create();
+    $ingredient = [
+        'amount' => '2',
+        'type' => 'cups',
+        'name' => 'pickles'
+    ];
+
+    $ingredientJson = json_encode($ingredient);
+    Livewire::test(IndexIngredients::class, ['recipeId' => $recipe->id, 'ingredients' => $recipe->ingredients])
+        ->call('setIngredient', $ingredientJson)
+        ->assertSet('amount', '2')
+        ->assertSet('type', 'cups')
+        ->assertSet('name', 'pickles');
 });

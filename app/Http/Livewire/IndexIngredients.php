@@ -17,6 +17,12 @@ class IndexIngredients extends Component
 
     public $recipeId;
 
+    public $showCreateIngredient = false;
+
+    public $showEditIngredient = false;
+
+    public $showButton = true;
+
     public function render()
     {
         return view('livewire.index-ingredients');
@@ -31,10 +37,23 @@ class IndexIngredients extends Component
             'type' => $this->type,
             'name' => $this->name
         ]);
-        $this->render();
 
         $recipe->ingredients = $this->ingredients;
 
         $recipe->save();
+
+        $this->amount = '';
+        $this->type = '';
+        $this->name = '';
+    }
+
+    public function setIngredient($ingredientJson)
+    {
+        $ingredient = json_decode($ingredientJson, true);
+
+        $this->amount = $ingredient['amount'];
+        $this->name = $ingredient['name'];
+        $this->type = $ingredient['type'];
     }
 }
+
