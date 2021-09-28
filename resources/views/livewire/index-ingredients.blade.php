@@ -36,7 +36,7 @@ $ingredientStep = 1;
   </form>
 </div>
   <div x-show="showEditIngredient">
-  <form wire:submit.prevent="editIngredient(ingredient)">
+  <form wire:submit.prevent="updateIngredient()">
     <div class="my-2">
       <label for="amount">How Much?</label>
       <input type="text" id="amount" wire:model="amount" class="w-full">

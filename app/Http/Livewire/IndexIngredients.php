@@ -15,6 +15,8 @@ class IndexIngredients extends Component
 
     public $name;
 
+    public $uid;
+
     public $recipeId;
 
     public $showCreateIngredient = false;
@@ -35,8 +37,10 @@ class IndexIngredients extends Component
         $this->ingredients->add([
             'amount' => $this->amount,
             'type' => $this->type,
-            'name' => $this->name
+            'name' => $this->name,
+            'uid'=> $this->uid
         ]);
+
 
         $recipe->ingredients = $this->ingredients;
 
@@ -45,6 +49,7 @@ class IndexIngredients extends Component
         $this->amount = '';
         $this->type = '';
         $this->name = '';
+        $this->uid = '';
     }
 
     public function setIngredient($ingredientJson)
@@ -54,6 +59,35 @@ class IndexIngredients extends Component
         $this->amount = $ingredient['amount'];
         $this->name = $ingredient['name'];
         $this->type = $ingredient['type'];
+        $this->uid = $ingredient['uid'];
+    }
+
+    public function updateIngredient()
+    {
+        $this->ingredients = $this->ingredients->reject(function ($value, $key) {
+            return $value['uid'] == $this->uid;
+        });
+        $ingredient = [
+            'uid' => $this->uid,
+            'amount' => $this->amount,
+            'name' => $this->name,
+            'type' => $this->type,
+        ];
+
+        $recipe = Recipe::find($this->recipeId);
+
+        $this->ingredients->add($ingredient);
+
+        $recipe->ingredients = $this->ingredients;
+
+        $recipe->save();
+        $this->render();
+
+        $this->amount = '';
+        $this->type = '';
+        $this->name = '';
+        $this->amount = '';
+        $this->type = '';
+        $this->name = '';
     }
 }
-
